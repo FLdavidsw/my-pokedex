@@ -20,7 +20,7 @@ export class PokedexService {
       params = params.set('limit', limit);
       params = params.set('offset', offset);
     }
-    return this.http.get<pokemonPagination>(`${this.urlApi}/pokemon/`)
+    return this.http.get<pokemonPagination>(`${this.urlApi}/pokemon/`,{params})
   }
 
   getPokemon(pokemonName: string) {

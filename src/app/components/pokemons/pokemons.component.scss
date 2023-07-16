@@ -1,0 +1,43 @@
+.pokemons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+// Tables
+@media screen and (min-width: 25.74em) and (max-width: 40em){
+    .pokemons-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 40em) and (max-width: 63.9em){
+    .pokemons-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 5px;
+    }
+}
+
+// web
+@media screen and (min-width: 64em) and (max-width: 78.125em){
+    .pokemons-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+        // LA LINEA DE ABAJO ES UN EJEMPLO DE COMO APLICAR UN ESTILO 
+        // QUE LLENE LA GRILLA DE FORMA AUTOMATICA CON VALORES PREDE-
+        // -TERMINADOS 
+        //grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+    }
+}
+@media screen and (min-width: 78.125em){
+    .pokemons-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 5px;
+    }
+}

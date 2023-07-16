@@ -1,4 +1,9 @@
-<app-pokemon *ngFor="let pokemon of pokemons" [pokemon]="pokemon"></app-pokemon>
+<div class="pokemons-grid">
+    <app-pokemon 
+    (stateDetail)="showPokemonCard($event)"
+    *ngFor="let pokemon of pokemons" 
+    [pokemon]="pokemon"></app-pokemon>
+</div>
 <!--
     <app-img *ngIf="pokemon.img" [img]="pokemon.img"></app-img>
 -->

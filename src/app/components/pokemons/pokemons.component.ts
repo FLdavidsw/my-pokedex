@@ -16,7 +16,8 @@ export class PokemonsComponent implements OnInit{
   pokemons: pokemon[] = []
   pokemonsPagination: pokemonPagination[] = [];
   results: resultPokemon[] = [];
-  limit = 20;
+  togglePokemonCard = false;
+  limit = 40;
   offset = 0;
 
   constructor(
@@ -37,27 +38,13 @@ export class PokemonsComponent implements OnInit{
           this.pokemon.img = data.sprites.other['official-artwork'].front_default;
           this.pokemons = this.pokemons.concat(this.pokemon);
           console.log(this.pokemon.sprites.back_default);
-          /*
-          this.pokemon.sprites['official-artwork'].front_default = data.sprites.other['official-artwork'].front_default;
-          */
         });
       }
-   /*   
-      this.results.forEach(function (value){
-        console.log(value.name);
-      });
+    });
+  }
 
-      console.log(this.results[0]);
-      */
-    });
-/*
-    this.pokedexService.getPokemon('bulbasaur')
-    .subscribe(data => {
-      this.pokemon = data;
-      this.pokemon.img = data.sprites.other['official-artwork'].front_default;
-      console.log(data.sprites.other['official-artwork'].front_default);
-    });
-    */
+  showPokemonCard(id: number) {
+    console.log(id);
   }
 
 }

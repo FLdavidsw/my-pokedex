@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { pokemon } from './../../models/pokemon.model'
+import { pokemon,  } from './../../models/pokemon.model'
 
 @Component({
   selector: 'app-pokemon',
@@ -10,7 +10,12 @@ import { pokemon } from './../../models/pokemon.model'
 export class PokemonComponent {
 
   @Input() pokemon!: pokemon;
+  @Output() stateDetail = new EventEmitter<number>();
 
   constructor () {}
+
+  showDetail(){
+    this.stateDetail.emit(this.pokemon.id);
+  }
 
 }

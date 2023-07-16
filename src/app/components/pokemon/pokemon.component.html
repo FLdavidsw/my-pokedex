@@ -1,6 +1,7 @@
-<div class="pokemon-card">
+<div (click)="showDetail()" class="pokemon-card">
     <h1>{{pokemon.name}}</h1>
     <app-img *ngIf="pokemon.img !== undefined" [img]="pokemon.img"></app-img>
+    <p>#{{pokemon.id}}</p>
     <ul class="stats">
         <li *ngFor="let pokemonType of pokemon.types">{{pokemonType.type.name}}</li>
     </ul>
