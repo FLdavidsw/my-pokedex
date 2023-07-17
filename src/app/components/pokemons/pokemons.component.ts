@@ -13,6 +13,7 @@ import { PokedexService } from './../../services/pokedex.service';
 export class PokemonsComponent implements OnInit{
 
   pokemon!: pokemon;
+  pokemonChosen!: pokemon;
   pokemons: pokemon[] = []
   pokemonsPagination: pokemonPagination[] = [];
   results: resultPokemon[] = [];
@@ -23,7 +24,7 @@ export class PokemonsComponent implements OnInit{
   constructor(
     private pokedexService: PokedexService
   ){
-    
+
   }
 
   ngOnInit(){
@@ -44,6 +45,7 @@ export class PokemonsComponent implements OnInit{
   }
 
   showPokemonCard(id: number) {
+    this.togglePokemonCard = !this.togglePokemonCard;
     console.log(id);
   }
 
