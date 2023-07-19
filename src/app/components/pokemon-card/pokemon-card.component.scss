@@ -1,0 +1,39 @@
+.pokemon-card {
+    position: fixed;
+    top: 0;
+    left: 70%;
+    bottom: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: all ease-out .5s;
+    img{
+        width: 100%;
+    }
+    &.active {
+        transform: translateX(0);
+    }
+  }
+
+  // Tables
+@media screen and (max-width: 25.74em){
+    .pokemon-card {
+        left: 0;
+    }
+
+}
+
+@media screen and (min-width: 25.75em) and (max-width: 63.9em){
+    .pokemon-card {
+        left: 50%;
+    }
+}
+
+// web
+@media screen and (min-width: 64em) and (max-width: 78.125em){
+    .pokemon-card {
+        left: 60%;
+    }
+}

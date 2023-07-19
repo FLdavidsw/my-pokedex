@@ -10,12 +10,12 @@ import { pokemon,  } from './../../models/pokemon.model'
 export class PokemonComponent {
 
   @Input() pokemon!: pokemon;
-  @Output() stateDetail = new EventEmitter<number>();
+  @Output() namePokemon = new EventEmitter<string>();
 
   constructor () {}
 
   showDetail(){
-    this.stateDetail.emit(this.pokemon.id);
+    this.namePokemon.emit(this.pokemon.name);
   }
 
 }

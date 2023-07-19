@@ -1,9 +1,14 @@
 <div class="pokemons-grid">
     <app-pokemon 
-    (stateDetail)="showPokemonCard($event)"
+    (namePokemon)="showPokemonCard($event)"
     *ngFor="let pokemon of pokemons" 
     [pokemon]="pokemon"></app-pokemon>
 </div>
+<app-pokemon-card
+[pokemonChosen]="pokemonChosen"
+[showCard]="statusPokemonCard"
+(stateCard)="togglePokemonCard($event)"
+></app-pokemon-card>
 <!--
     <app-img *ngIf="pokemon.img" [img]="pokemon.img"></app-img>
 -->

@@ -1,0 +1,8 @@
+<div class="pokemon-card" [class.active]="showCard">
+    <div *ngIf="pokemonChosen">
+        <button (click)="closePokemonCard()">Close</button>
+        <h1>{{ pokemonChosen.name }}</h1>
+        <img [src]="pokemonChosen.img" alt="perro">
+        <p> {{ pokemonChosen.id }}</p>
+    </div>
+</div>

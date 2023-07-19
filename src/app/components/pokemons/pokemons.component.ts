@@ -13,10 +13,11 @@ import { PokedexService } from './../../services/pokedex.service';
 export class PokemonsComponent implements OnInit{
 
   pokemon!: pokemon;
+  pokemonChosen!: pokemon;
   pokemons: pokemon[] = []
   pokemonsPagination: pokemonPagination[] = [];
   results: resultPokemon[] = [];
-  togglePokemonCard = false;
+  statusPokemonCard = false;
   limit = 40;
   offset = 0;
 
@@ -37,14 +38,24 @@ export class PokemonsComponent implements OnInit{
           this.pokemon = data;
           this.pokemon.img = data.sprites.other['official-artwork'].front_default;
           this.pokemons = this.pokemons.concat(this.pokemon);
-          console.log(this.pokemon.sprites.back_default);
         });
       }
     });
   }
 
-  showPokemonCard(id: number) {
-    console.log(id);
+  showPokemonCard(name: string) {
+    this.statusPokemonCard = true;
+    this.pokedexService.getPokemon(name)
+    .subscribe(data => {
+      this.pokemonChosen = data;
+      this.pokemonChosen.img = data.sprites.other['official-artwork'].front_default;
+      console.log(this.pokemonChosen, this.statusPokemonCard);
+    });
   }
+
+  togglePokemonCard(stateCard: boolean) {
+    this.statusPokemonCard = stateCard;
+  }
+
 
 }
