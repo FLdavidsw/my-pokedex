@@ -1,8 +1,36 @@
 <div class="pokemon-card" [class.active]="showCard">
+    <mat-card class="example-card" *ngIf="pokemonChosen">
+        <mat-card-header class="header-card">
+          <div mat-card-avatar class="header-image">
+            <!--<app-img *ngIf="urlLogoImg !== undefined" [img]="urlLogoImg" alt="poke"></app-img>-->
+           <img class="pokemon-logo" src="./../../../assets/icons/Poké_Ball_icon.svg.png" alt="poke">
+          </div>
+            <mat-card-title>{{ pokemonChosen.name | uppercase }}</mat-card-title>
+            <mat-card-content>
+                <p>
+                    {{ pokemonChosen.id }}
+                </p>
+            </mat-card-content>
+
+        </mat-card-header>
+        <app-img *ngIf="pokemonChosen.img !== undefined" [img]="pokemonChosen.img"></app-img>
+        <mat-card-content>
+          <p>
+            {{ pokemonChosen.id }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="closePokemonCard()">Close</button>
+        </mat-card-actions>
+      </mat-card>
+</div>
+<!--
+<div class="pokemon-card" [class.active]="showCard">
     <div *ngIf="pokemonChosen">
         <button (click)="closePokemonCard()">Close</button>
         <h1>{{ pokemonChosen.name }}</h1>
-        <img [src]="pokemonChosen.img" alt="perro">
+        <app-img *ngIf="pokemonChosen.img !== undefined" [img]="pokemonChosen.img"></app-img>
         <p> {{ pokemonChosen.id }}</p>
     </div>
 </div>
+-->

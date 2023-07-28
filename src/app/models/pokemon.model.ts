@@ -13,6 +13,7 @@ export interface pokemon {
     types:                    Type[];
     weight:                   number;
     img?:                     string;
+    colorType?:               string[];
 }
 
 export interface Ability {

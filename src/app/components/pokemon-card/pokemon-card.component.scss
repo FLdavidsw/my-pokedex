@@ -4,13 +4,24 @@
     left: 70%;
     bottom: 0;
     right: 0;
+    border: 1px solid;
+    border-radius: 15px;
     background: white;
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
     transition: all ease-out .5s;
-    img{
+    img {
         width: 100%;
+    }
+    .header-card {
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid;
+        border-radius: 15px;
+    }
+    mat-card-title {
+        font-weight: bold;
     }
     &.active {
         transform: translateX(0);

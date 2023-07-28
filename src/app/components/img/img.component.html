@@ -1,5 +1,8 @@
-<img (load)="imgLoaded()" (error)="imgError()" [src]="img" *ngIf="img; else elseImg" >
+<div class="container-img">
+  <img (load)="imgLoaded()" (error)="imgError()" [src]="img" *ngIf="img; else elseImg" >
 <!-- <h3> {{ counterHour }}:{{ counterMin }}:{{ counterSeg }}</h3> -->
 <ng-template #elseImg>
   <img [src]="imageDefault" alt="">
 </ng-template>
+</div>
+
