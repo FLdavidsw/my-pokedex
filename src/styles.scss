@@ -1,2 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import url(./styles/reset.scss);
+
+.types {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    .type {
+        //font-weight: bold;
+        text-align: center;
+        width: 60px;
+        border-radius: 12px;
+        padding: 3px;
+    }
+}

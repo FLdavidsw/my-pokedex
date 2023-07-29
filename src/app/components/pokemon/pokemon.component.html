@@ -2,9 +2,9 @@
     <h1>{{pokemon.name}}</h1>
         <app-img *ngIf="pokemon.img !== undefined" [img]="pokemon.img"></app-img>
     <p>#{{pokemon.id}}</p>
-    <ul class="stats">
+    <ul class="types">
         <div *ngFor="let pokemonType of pokemon.types; index as i">
-            <li class="stat" *ngIf="pokemon.colorType !== undefined" [ngStyle]="{'background': pokemon.colorType[i]}">{{pokemonType.type.name}}</li>
+            <li class="type" *ngIf="pokemon.colorType !== undefined" [ngStyle]="{'background': pokemon.colorType[i]}">{{pokemonType.type.name}}</li>
         </div>
     </ul>
 </div>

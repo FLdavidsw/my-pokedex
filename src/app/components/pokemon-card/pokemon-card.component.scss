@@ -20,8 +20,17 @@
         border-bottom: 1px solid;
         border-radius: 15px;
     }
+    .header-image {
+        //justify-content: left;
+    }
     mat-card-title {
+        //justify-content: center;
         font-weight: bold;
+        position: sticky;
+    }
+    .hp-stat {
+        //justify-content: right;
+        padding: 0;
     }
     &.active {
         transform: translateX(0);
@@ -38,7 +47,7 @@
 
 @media screen and (min-width: 25.75em) and (max-width: 63.9em){
     .pokemon-card {
-        left: 50%;
+        left: 40%;
     }
 }
 

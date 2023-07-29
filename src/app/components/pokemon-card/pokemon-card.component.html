@@ -6,18 +6,19 @@
            <img class="pokemon-logo" src="./../../../assets/icons/Poké_Ball_icon.svg.png" alt="poke">
           </div>
             <mat-card-title>{{ pokemonChosen.name | uppercase }}</mat-card-title>
-            <mat-card-content>
+            <mat-card-content class="hp-stat">
                 <p>
-                    {{ pokemonChosen.id }}
+                   H.P {{ pokemonChosen.stats[0].base_stat }}
                 </p>
             </mat-card-content>
-
         </mat-card-header>
         <app-img *ngIf="pokemonChosen.img !== undefined" [img]="pokemonChosen.img"></app-img>
         <mat-card-content>
-          <p>
-            {{ pokemonChosen.id }}
-          </p>
+          <ul class="types">
+            <div *ngFor="let pokemonChosenType of pokemonChosen.types; index as i">
+                <li class="type" *ngIf="pokemonChosen.colorType !== undefined" [ngStyle]="{'background': pokemonChosen.colorType[i]}">{{pokemonChosenType.type.name}}</li>
+            </div>
+        </ul>
         </mat-card-content>
         <mat-card-actions>
           <button mat-button (click)="closePokemonCard()">Close</button>
