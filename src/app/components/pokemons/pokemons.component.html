@@ -3,12 +3,14 @@
     (namePokemon)="showPokemonCard($event)"
     *ngFor="let pokemon of pokemons" 
     [pokemon]="pokemon"></app-pokemon>
+    <button>Load More Pokemons</button>
 </div>
 <app-pokemon-card
 [pokemonChosen]="pokemonChosen"
 [showCard]="statusPokemonCard"
 (stateCard)="togglePokemonCard($event)"
 ></app-pokemon-card>
+
 <!--
     <app-img *ngIf="pokemon.img" [img]="pokemon.img"></app-img>
 -->

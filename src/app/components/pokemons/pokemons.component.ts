@@ -23,7 +23,7 @@ export class PokemonsComponent implements OnInit{
   pokemonsPagination: pokemonPagination[] = [];
   results: resultPokemon[] = [];
   statusPokemonCard = false;
-  limit = 40;
+  limit = 20;
   offset = 0;
 
   constructor(
@@ -42,20 +42,7 @@ export class PokemonsComponent implements OnInit{
         .subscribe(data => {
           this.pokemon = data;
           this.pokemon.img = data.sprites.other['official-artwork'].front_default;
-          /*for (var i = 0; i < this.pokemon.types.length; i++) {
-            this.colorType = this.colorAssign(this.colorTypes, this.pokemon.types[i]);
-            this.types = this.types.concat(this.colorType);
-            this.pokemon.colorType = this.types;
-            for (let [key, value] of Object.entries(this.colorTypes)) {
-              if (this.pokemon.types[i].type.name.toLowerCase() === key) {
-                this.pokemon.colorType = value;
-                console.log(this.pokemon.colorType)
-              }
-            }  */
-          //this.pokemon.colorType = this.types;
-          console.log(this.pokemon.colorType);
           this.pokemons = this.pokemons.concat(this.pokemon);
-          this.types = [];
         });
       }
     });
@@ -75,12 +62,21 @@ export class PokemonsComponent implements OnInit{
     this.statusPokemonCard = stateCard;
   }
 
-  colorAssign(colorTypes: object, Type: any) {
-    for (let [key, value] of Object.entries(colorTypes)) {
-      if (Type.type.name === key) {
-        return value;
+  getPokemonsPagination(limit: number, offset: number) {
+    this.pokedexService.getAllPokemon(limit, offset)
+    .subscribe(data => {
+      this.pokemonsPagination = this.pokemonsPagination.concat(data);
+      this.results = data['results'];
+      for (let i = 0; i < this.results.length; i++) {
+        this.pokedexService.getPokemon(this.results[i].name)
+        .subscribe(data => {
+          this.pokemon = data;
+          this.pokemon.img = data.sprites.other['official-artwork'].front_default;
+          this.pokemons = this.pokemons.concat(this.pokemon);
+          this.types = [];
+        });
       }
-    }
+    });
   }
 
 }

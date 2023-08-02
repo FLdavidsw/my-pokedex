@@ -6,22 +6,35 @@
            <img class="pokemon-logo" src="./../../../assets/icons/Poké_Ball_icon.svg.png" alt="poke">
           </div>
             <mat-card-title>{{ pokemonChosen.name | uppercase }}</mat-card-title>
+            <mat-card-subtitle>
+              <p class="id">
+                #{{ pokemonChosen.id | customId }}
+              </p>
+            </mat-card-subtitle>
             <mat-card-content class="hp-stat">
                 <p>
                    H.P {{ pokemonChosen.stats[0].base_stat }}
                 </p>
             </mat-card-content>
         </mat-card-header>
+        
         <app-img *ngIf="pokemonChosen.img !== undefined" [img]="pokemonChosen.img"></app-img>
         <mat-card-content>
-          <ul class="types">
+        <ul class="types">
             <div *ngFor="let pokemonChosenType of pokemonChosen.types; index as i">
-                <li class="type" *ngIf="pokemonChosen.colorType !== undefined" [ngStyle]="{'background': pokemonChosen.colorType[i]}">{{pokemonChosenType.type.name}}</li>
+                <li class="type" *ngIf="pokemonChosen.colorType !== undefined" [ngStyle]="{'background': pokemonChosen.colorType[i]}">{{ pokemonChosenType.type.name | toUpperCaseFirst }}</li>
             </div>
         </ul>
-        </mat-card-content>
+        <hr/>
+      
+        <div class="container-stats">
+          <div *ngFor="let pokemonChosenStat of pokemonChosen.stats; index as i">
+            <p>{{ pokemonChosenStat.stat.name | uppercase}} {{ pokemonChosenStat.base_stat }}</p>
+          </div>
+        </div>
+      </mat-card-content>
         <mat-card-actions>
-          <button mat-button (click)="closePokemonCard()">Close</button>
+          <button class="button-close" (click)="closePokemonCard()">Close</button>
         </mat-card-actions>
       </mat-card>
 </div>

@@ -38,7 +38,6 @@ export class PokedexService {
           this.types = this.types.concat(this.colorType);
         }
         pokemon.colorType = this.types;
-        console.log(pokemon.colorType);
         this.types = [];
         return pokemon;
       })

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, Input, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 
@@ -9,7 +9,7 @@ import { pokemon, pokemonPagination, resultPokemon } from './../../models/pokemo
   templateUrl: './pokemon-card.component.html',
   styleUrls: ['./pokemon-card.component.scss'],
 })
-export class PokemonCardComponent implements OnChanges {
+export class PokemonCardComponent{
 
 @Input() pokemonChosen!: pokemon;
 @Input() showCard = false;
@@ -22,8 +22,5 @@ closePokemonCard(){
   this.stateCard.emit(this.showCard);
 }
 
-ngOnChanges(changes: SimpleChanges){
-  console.log(changes);
-}
 
 }
