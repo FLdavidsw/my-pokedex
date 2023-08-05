@@ -61,9 +61,9 @@ export class PokemonsComponent implements OnInit{
   getPokemonsPagination(limit: number, offset: number) {
     this.pokedexService.getAllPokemon(limit, offset)
     .subscribe(data => {
+      this.stateLoadSpinner = !this.stateLoadSpinner;
       this.pokemonsPagination = this.pokemonsPagination.concat(data);
       this.results = data['results'];
-      console.log(this.results);
       this.offset += this.limit;
       for (let result of this.results) {
         this.pokedexService.getPokemon(result.name)
@@ -72,8 +72,11 @@ export class PokemonsComponent implements OnInit{
           this.pokemon = data;
           this.pokemon.img = data.sprites.other['official-artwork'].front_default;
           this.pokemons = this.pokemons.concat(this.pokemon);
+          this.stateLoadSpinner = false;
         });
       }
+      
+      
       });
   }
 

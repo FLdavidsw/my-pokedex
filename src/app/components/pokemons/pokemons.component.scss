@@ -1,3 +1,8 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .pokemons-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -5,6 +10,12 @@
     margin-left: 3px;
     margin-right: 3px;
 }
+.load {
+    width: 300px;
+    margin-bottom: 60px;
+    align-self: center;
+}
+
 
 // Tables
 @media screen and (min-width: 25.74em) and (max-width: 40em){

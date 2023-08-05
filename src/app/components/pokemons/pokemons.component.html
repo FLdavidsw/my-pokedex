@@ -1,18 +1,21 @@
-<div class="pokemons-grid">
-    <app-pokemon 
-    (namePokemon)="showPokemonCard($event)"
-    *ngFor="let pokemon of pokemons" 
-    [pokemon]="pokemon"></app-pokemon>
-    <button #loadButton *ngIf="!stateLoadSpinner; else loadSpinner"  (click)="loadMorePokemons()">Load More Pokemons</button>
-    <ng-template #loadSpinner>
-        <mat-spinner></mat-spinner>
-    </ng-template>
+<div class="main-container">
+    <div class="pokemons-grid">
+        <app-pokemon 
+        (namePokemon)="showPokemonCard($event)"
+        *ngFor="let pokemon of pokemons" 
+        [pokemon]="pokemon"></app-pokemon>
+    </div>
+        <button class="loadButton load" *ngIf="!stateLoadSpinner; else loadSpinner"  (click)="loadMorePokemons()">Load More Pokemons</button>
+        <ng-template  #loadSpinner>
+            <mat-spinner class="loadSpinner load"></mat-spinner>
+        </ng-template>
+    <app-pokemon-card
+    [pokemonChosen]="pokemonChosen"
+    [showCard]="statusPokemonCard"
+    (stateCard)="togglePokemonCard($event)"
+    ></app-pokemon-card>
 </div>
-<app-pokemon-card
-[pokemonChosen]="pokemonChosen"
-[showCard]="statusPokemonCard"
-(stateCard)="togglePokemonCard($event)"
-></app-pokemon-card>
+
 
 <!--
     <app-img *ngIf="pokemon.img" [img]="pokemon.img"></app-img>
