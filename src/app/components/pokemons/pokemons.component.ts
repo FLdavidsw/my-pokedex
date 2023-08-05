@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { map, switchMap } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 
 import { pokemon, pokemonPagination, resultPokemon } from './../../models/pokemon.model';
 import { PokedexService } from './../../services/pokedex.service';
@@ -23,6 +25,8 @@ export class PokemonsComponent implements OnInit{
   pokemonsPagination: pokemonPagination[] = [];
   results: resultPokemon[] = [];
   statusPokemonCard = false;
+  stateLoadSpinner = false;
+  isButtonDisabled: boolean = true;
   limit = 20;
   offset = 0;
 
@@ -33,19 +37,11 @@ export class PokemonsComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.pokedexService.getAllPokemon(this.limit, this.offset)
-    .subscribe(data => {
-      this.pokemonsPagination = this.pokemonsPagination.concat(data);
-      this.results = data['results'];
-      for (let i = 0; i < this.results.length; i++) {
-        this.pokedexService.getPokemon(this.results[i].name)
-        .subscribe(data => {
-          this.pokemon = data;
-          this.pokemon.img = data.sprites.other['official-artwork'].front_default;
-          this.pokemons = this.pokemons.concat(this.pokemon);
-        });
-      }
-    });
+    this.getPokemonsPagination(this.limit, this.offset)
+  }
+
+  loadMorePokemons(){
+    this.getPokemonsPagination(this.limit, this.offset);
   }
 
   showPokemonCard(name: string) {
@@ -67,16 +63,18 @@ export class PokemonsComponent implements OnInit{
     .subscribe(data => {
       this.pokemonsPagination = this.pokemonsPagination.concat(data);
       this.results = data['results'];
-      for (let i = 0; i < this.results.length; i++) {
-        this.pokedexService.getPokemon(this.results[i].name)
+      console.log(this.results);
+      this.offset += this.limit;
+      for (let result of this.results) {
+        this.pokedexService.getPokemon(result.name)
+        .pipe(delay(1500))
         .subscribe(data => {
           this.pokemon = data;
           this.pokemon.img = data.sprites.other['official-artwork'].front_default;
           this.pokemons = this.pokemons.concat(this.pokemon);
-          this.types = [];
         });
       }
-    });
+      });
   }
 
 }

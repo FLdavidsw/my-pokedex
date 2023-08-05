@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { delay } from 'rxjs';
 
 import { pokemon, pokemonPagination } from './../models/pokemon.model';
 
@@ -28,8 +29,8 @@ export class PokedexService {
     return this.http.get<pokemonPagination>(`${this.urlApi}/pokemon/`,{params})
   }
 
-  getPokemon(pokemonName: string) {
-    return this.http.get<any>(`${this.urlApi}/pokemon/${pokemonName}`)
+  getPokemon(pokemonNameorId: string | number) {
+    return this.http.get<any>(`${this.urlApi}/pokemon/${pokemonNameorId}`)
     .pipe(
       map(pokemon => {
         pokemon.img = pokemon.sprites.other['official-artwork'].front_default;
