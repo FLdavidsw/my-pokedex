@@ -17,9 +17,11 @@ export class PokedexService {
   colorType!: string;
   types: string[] = [];
   //https://pokeapi.co/api/v2/pokemon/?limit=20&offset=40
+  // link to get locations: https://pokeapi.co/api/v2/region
   constructor(
     private http: HttpClient
   ){}
+  
   getAllPokemon(limit?:number, offset?:number) {
     let params = new HttpParams();
     if(limit !== undefined && offset !== undefined) {
@@ -43,6 +45,10 @@ export class PokedexService {
         return pokemon;
       })
     )
+  }
+
+  getLocations() {
+    return this.http.get<any>(`${this.urlApi}/region`);
   }
 
   colorAssign(colorTypes: object, Type: any) {

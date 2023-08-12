@@ -1,0 +1,9 @@
+<div class="container-nav">
+    <img class="logo" src="./../../../assets/logos/pokemon-logo2.webp" alt="logo-pokemon">
+    <a href="">
+        <p>Pokemons</p>
+    </a>
+</div>
+<mat-chip-listbox aria-label="Fish selection">
+    <mat-chip-option color="warn" *ngFor="let region of regions; index as i">{{ region.name | toUpperCaseFirst }}</mat-chip-option>
+</mat-chip-listbox>

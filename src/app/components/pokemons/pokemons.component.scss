@@ -30,8 +30,8 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 5px;
-        margin-left: 15px;
-        margin-right: 15px;
+        width: 640px;
+        margin: 0 auto;
     }
 }
 
@@ -52,7 +52,7 @@
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-gap: 5px;
-        margin-left: 25px;
-        margin-right: 25px;
+        width: 1280px;
+        margin: 0 auto;
     }
 }

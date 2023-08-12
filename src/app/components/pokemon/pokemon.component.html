@@ -1,4 +1,4 @@
-<div (click)="showDetail()" class="pokemon-card">
+<div *ngIf="pokemon" (click)="showDetail()" class="pokemon-card">
     <h1>{{ pokemon.name | uppercase }}</h1>
         <app-img *ngIf="pokemon.img !== undefined" [img]="pokemon.img"></app-img>
     <p class="id">#{{ pokemon.id | customId}}</p>

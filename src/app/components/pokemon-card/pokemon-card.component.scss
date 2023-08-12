@@ -31,6 +31,9 @@
     mat-card-subtitle {
         text-align: center;
     }
+    .pokemon-tabs {
+        max-width: 800px;
+    }
 //styles to "close button". this style comes from https://getcssscan.com/css-buttons-examples
     mat-card-actions {
         justify-content: center;
@@ -66,23 +69,64 @@ styles for "close button" in file styles.scss
     }
   }
 
-  // Tables
-@media screen and (max-width: 25.74em){
+// Tables: width
+@media screen and (max-width: 28.4375em){
     .pokemon-card {
         left: 0;
     }
 
 }
 
+@media screen and (min-width: 28.4376em) and (max-width: 49.9em){
+    .pokemon-card {
+        left: 30%;
+    }
+}
+
+
+@media screen and (min-width: 50em) and (max-width: 78.125em){
+    .pokemon-card {
+        left: 60%;
+    }
+}
+
+// Tables: height
+  @media screen and (max-height: 42em){
+    .pokemon-card {
+        .container-stats {
+            column-gap: 30px;
+            row-gap: 10px;
+            margin-top: 20px;
+            p {
+                font-size: 16px;
+                text-align: center;
+            }
+        }
+        .header-card {
+            height: 50px;
+            mat-card-title {
+                //justify-content: center;
+                font-weight: bold;
+                position: sticky;
+            }
+        }
+        
+
+    }
+
+}
+
+/*
 @media screen and (min-width: 25.75em) and (max-width: 63.9em){
     .pokemon-card {
         left: 40%;
     }
 }
 
-// web
+
 @media screen and (min-width: 64em) and (max-width: 78.125em){
     .pokemon-card {
         left: 60%;
     }
-}
+}¨
+*/

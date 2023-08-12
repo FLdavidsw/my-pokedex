@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
 //command to add angular material correctly: ng add @angular/material 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +15,7 @@ import { PokemonCardComponent } from './components/pokemon-card/pokemon-card.com
 import { ToUpperCaseFirstPipe } from './pipes/to-upper-case-first.pipe';
 import { CustomIdPipe } from './pipes/custom-id.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PokemonsComponent,
     PokemonCardComponent,
     ToUpperCaseFirstPipe,
-    CustomIdPipe
+    CustomIdPipe,
+    NavComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    BrowserAnimationsModule
+    MatTabsModule,
+    BrowserAnimationsModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

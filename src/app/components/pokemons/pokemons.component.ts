@@ -21,12 +21,16 @@ export class PokemonsComponent implements OnInit{
   types: string[] = [];
   pokemon!: pokemon;
   pokemonChosen!: pokemon;
-  pokemons: pokemon[] = []
+  pokemons: pokemon[] = [];
+  allPokemons: resultPokemon[] = [];
   pokemonsPagination: pokemonPagination[] = [];
   results: resultPokemon[] = [];
+  slicer: resultPokemon[] = [];
   statusPokemonCard = false;
   stateLoadSpinner = false;
   isButtonDisabled: boolean = true;
+  add = 20;
+  maxNumberLimit = 1280;
   limit = 20;
   offset = 0;
 
@@ -37,11 +41,15 @@ export class PokemonsComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.getPokemonsPagination(this.limit, this.offset)
+    // this.getPokemonsPagination(this.limit, this.offset)
+    this.getPokemons(this.limit, this.offset);
   }
 
   loadMorePokemons(){
-    this.getPokemonsPagination(this.limit, this.offset);
+    this.offset += this.limit;
+    this.addingPokemons(this.offset, this.offset + this.limit);
+    console.log(this.offset);
+    // this.getPokemonsPagination(this.limit, this.offset);
   }
 
   showPokemonCard(name: string) {
@@ -56,6 +64,30 @@ export class PokemonsComponent implements OnInit{
   //Here, we are catching the card's current state from the Pokemon card component.
   togglePokemonCard(stateCard: boolean) {
     this.statusPokemonCard = stateCard;
+  }
+
+  getPokemons(limit: number, offset: number){
+    this.pokedexService.getAllPokemon(this.maxNumberLimit, this.offset).
+    subscribe(data => {
+      this.allPokemons = data['results'];
+      for(let i = offset; i < limit; i++){
+        this.slicer = this.slicer.concat(this.allPokemons[i]);
+      }
+      this.results = this.results.concat(this.slicer);
+      console.log(this.allPokemons);
+    })
+  }
+
+  addingPokemons(offset: number, limit: number){
+    this.slicer = [];
+    this.stateLoadSpinner = !this.stateLoadSpinner;
+    for(let i = offset; i < limit; i++){
+      this.slicer = this.slicer.concat(this.allPokemons[i]);
+    }
+    delay(3000);
+    this.stateLoadSpinner = !this.stateLoadSpinner;
+    this.results = this.results.concat(this.slicer);
+    console.log(this.results);
   }
 
   getPokemonsPagination(limit: number, offset: number) {
