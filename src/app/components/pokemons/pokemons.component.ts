@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import Swal from 'sweetalert2';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { map, switchMap } from 'rxjs/operators';
 import { delay } from 'rxjs/operators';
 
-import { pokemon, pokemonPagination, resultPokemon } from './../../models/pokemon.model';
+import { pokemon, region, type, pokemonPagination, resultPokemon } from './../../models/pokemon.model';
 import { PokedexService } from './../../services/pokedex.service';
 
 @Component({
@@ -18,7 +19,11 @@ export class PokemonsComponent implements OnInit{
                 "poison": '#BE29C1', "electric": '#FFFF00', "ground": '#C55710', "rock": '#903F0A', "psychic": '#EC4895', "ice": '#00FFFB', "bug": '#6F8F2A',
                 "ghost": '#95849E', "steel": '#A3B1B2', "dragon": '#77EEB6', "dark": '#8C8593', "fairy": '#EE2F54'}
   colorType!: string;
-  types: string[] = [];
+  types: type[] = [];
+  regions: region[] = [];
+  nameList1 = "Region";
+  searchedPokemon = "bulbasaur";
+  pokemonExist = true; 
   pokemon!: pokemon;
   pokemonChosen!: pokemon;
   pokemons: pokemon[] = [];
@@ -43,12 +48,13 @@ export class PokemonsComponent implements OnInit{
   ngOnInit(){
     // this.getPokemonsPagination(this.limit, this.offset)
     this.getPokemons(this.limit, this.offset);
+    this.getRegions();
+    this.getTypes();
   }
 
   loadMorePokemons(){
     this.offset += this.limit;
     this.addingPokemons(this.offset, this.offset + this.limit);
-    console.log(this.offset);
     // this.getPokemonsPagination(this.limit, this.offset);
   }
 
@@ -74,7 +80,6 @@ export class PokemonsComponent implements OnInit{
         this.slicer = this.slicer.concat(this.allPokemons[i]);
       }
       this.results = this.results.concat(this.slicer);
-      console.log(this.allPokemons);
     })
   }
 
@@ -87,7 +92,6 @@ export class PokemonsComponent implements OnInit{
     delay(3000);
     this.stateLoadSpinner = !this.stateLoadSpinner;
     this.results = this.results.concat(this.slicer);
-    console.log(this.results);
   }
 
   getPokemonsPagination(limit: number, offset: number) {
@@ -110,6 +114,31 @@ export class PokemonsComponent implements OnInit{
       
       
       });
+  }
+
+  getRegions(){
+    this.pokedexService.getLocations().
+    subscribe(data => {
+      this.regions = this.regions.concat(data.results);
+    });
+  }
+
+  getTypes(){
+    this.pokedexService.getTypes().
+    subscribe(data => {
+      this.types = this.types.concat(data.results);
+    });
+  }
+
+  searchPokemon(event: any) {
+    this.searchedPokemon = this.searchedPokemon.toLowerCase()
+    this.pokedexService.getPokemon(this.searchedPokemon.toLowerCase()).
+    subscribe(data => {
+      console.log(data);
+    }, errorMsg => {
+      this.searchedPokemon = "bulbasaur";
+      Swal.fire({text: errorMsg});
+    });
   }
 
 }

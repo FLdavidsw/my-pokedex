@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { pokemon, resultPokemon  } from './../../models/pokemon.model'
 import { PokedexService } from 'src/app/services/pokedex.service';
@@ -10,21 +10,18 @@ import { PokedexService } from 'src/app/services/pokedex.service';
 })
 export class PokemonComponent implements OnInit {
 
-  @Input() pokemonData!: resultPokemon;
+  @Input() pokemonName!: string | number;
   @Output() namePokemon = new EventEmitter<string>();
 
   pokemon!: pokemon;
+  regions: any[] = [];
 
   constructor (
     private pokedexService: PokedexService
   ) {}
 
   ngOnInit(){
-    this.getPokemon(this.pokemonData.name);
-  }
-
-  ngOnChanges(changes: SimpleChanges){
-    console.log(changes);
+    this.getPokemon(this.pokemonName);
   }
 
   getPokemon(nameOrId: string | number){

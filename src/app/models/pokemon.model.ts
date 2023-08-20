@@ -16,6 +16,16 @@ export interface pokemon {
     colorType?:               string[];
 }
 
+export interface region {
+    name: string;
+    url: string;
+}
+
+export interface type {
+    name: string;
+    url: string;
+}
+
 export interface Ability {
     ability:   Species;
     is_hidden: boolean;

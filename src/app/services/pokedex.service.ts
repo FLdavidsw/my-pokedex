@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { delay } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { delay, throwError, Observable } from 'rxjs';
 
 import { pokemon, pokemonPagination } from './../models/pokemon.model';
 
@@ -16,8 +16,9 @@ export class PokedexService {
   "ghost": '#95849E', "steel": '#A3B1B2', "dragon": '#77EEB6', "dark": '#8C8593', "fairy": '#EE2F54'}
   colorType!: string;
   types: string[] = [];
-  //https://pokeapi.co/api/v2/pokemon/?limit=20&offset=40
+  //https://pokeapi.co/api/v2/pokemon?offset=20&limit=20
   // link to get locations: https://pokeapi.co/api/v2/region
+  // link to get types: https://pokeapi.co/api/v2/type
   constructor(
     private http: HttpClient
   ){}
@@ -25,8 +26,8 @@ export class PokedexService {
   getAllPokemon(limit?:number, offset?:number) {
     let params = new HttpParams();
     if(limit !== undefined && offset !== undefined) {
-      params = params.set('limit', limit);
       params = params.set('offset', offset);
+      params = params.set('limit', limit);
     }
     return this.http.get<pokemonPagination>(`${this.urlApi}/pokemon/`,{params})
   }
@@ -43,12 +44,23 @@ export class PokedexService {
         pokemon.colorType = this.types;
         this.types = [];
         return pokemon;
+      }),
+      //catchError( error => throwError(console.log("se obtiene el siguiente error" + error)))
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return throwError(() => new Error ('El pokemon no fue encontrado'));
+        }
+        return throwError(() => new Error ('Algo esta fallando en el server'));
       })
-    )
+      )
   }
 
   getLocations() {
     return this.http.get<any>(`${this.urlApi}/region`);
+  }
+
+  getTypes() {
+    return this.http.get<any>(`${this.urlApi}/type`);
   }
 
   colorAssign(colorTypes: object, Type: any) {
