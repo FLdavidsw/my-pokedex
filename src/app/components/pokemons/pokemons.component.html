@@ -3,14 +3,14 @@
       <div class="filter-container">
         <mat-form-field>
           <mat-label>Region</mat-label>
-          <mat-select>
+          <mat-select #Regions (selectionChange)="onSelectedRegion(Regions.value)">
             <mat-option>None</mat-option>
             <mat-option *ngFor="let region of regions" [value]="region.name">{{ region.name | toUpperCaseFirst }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Type</mat-label>
-          <mat-select>
+          <mat-select #Types (selectionChange)="onSelectedType(Types.value)">
             <mat-option>None</mat-option>
             <mat-option *ngFor="let type of types" [value]="type.name">{{ type.name | toUpperCaseFirst }}</mat-option>
           </mat-select>
@@ -22,17 +22,22 @@
         <mat-icon matSuffix><img src="./../../../assets/icons/icon_search.png" alt="lupa"></mat-icon>
       </mat-form-field>
     </div>
-    <div class="pokemons-grid" *ngIf="pokemonExist; else elementSearched">
+    <div class="pokemons-grid" *ngIf="!pokemonExist; else elementSearched">
         <app-pokemon
         *ngFor="let result of results; index as i"
         (namePokemon)="showPokemonCard($event)" 
         [pokemonName]="result.name"></app-pokemon>
     </div>
-    <ng-template #elementSearched> 
+    <ng-template #elementSearched>
+    <div class="pokemons-grid">
       <app-pokemon
-        (namePokemon)="showPokemonCard($event)" 
-        [pokemonName]="searchedPokemon"></app-pokemon>
+      (namePokemon)="showPokemonCard($event)" 
+      [pokemonName]="searchedPokemon"
+      [enterButtonPressed]="switchEnterButton"></app-pokemon>
+    </div>
     </ng-template>
+
+    
         <button class="loadButton load" *ngIf="!stateLoadSpinner; else loadSpinner"  (click)="loadMorePokemons()">Load More Pokemons</button>
         <ng-template  #loadSpinner>
             <mat-spinner class="loadSpinner load"></mat-spinner>

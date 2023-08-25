@@ -22,8 +22,9 @@ export class PokemonsComponent implements OnInit{
   types: type[] = [];
   regions: region[] = [];
   nameList1 = "Region";
-  searchedPokemon = "bulbasaur";
-  pokemonExist = true; 
+  switchEnterButton = false;
+  searchedPokemon = "";
+  pokemonExist = false; 
   pokemon!: pokemon;
   pokemonChosen!: pokemon;
   pokemons: pokemon[] = [];
@@ -132,13 +133,21 @@ export class PokemonsComponent implements OnInit{
 
   searchPokemon(event: any) {
     this.searchedPokemon = this.searchedPokemon.toLowerCase()
-    this.pokedexService.getPokemon(this.searchedPokemon.toLowerCase()).
-    subscribe(data => {
-      console.log(data);
+    this.pokedexService.getPokemon(this.searchedPokemon.toLowerCase())
+    .subscribe(data => {
+      this.pokemonExist = true;
+      this.switchEnterButton = !this.switchEnterButton;
     }, errorMsg => {
-      this.searchedPokemon = "bulbasaur";
+      this.searchedPokemon = "";
+      this.pokemonExist = false;
       Swal.fire({text: errorMsg});
     });
+  }
+  onSelectedRegion(region: string){
+    console.log(region);
+  }
+  onSelectedType(Type: string){
+    console.log(Type);
   }
 
 }
