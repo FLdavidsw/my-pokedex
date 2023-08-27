@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { delay } from 'rxjs/operators';
 
-import { pokemon, region, type, pokemonPagination, resultPokemon } from './../../models/pokemon.model';
+import { pokemon, region, type, pokemonPagination, resultPokemon, typesPokemon } from './../../models/pokemon.model';
 import { PokedexService } from './../../services/pokedex.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class PokemonsComponent implements OnInit{
                 "ghost": '#95849E', "steel": '#A3B1B2', "dragon": '#77EEB6', "dark": '#8C8593', "fairy": '#EE2F54'}
   colorType!: string;
   types: type[] = [];
+  pokemonsByTypes: typesPokemon[] = [];
   regions: region[] = [];
   nameList1 = "Region";
   switchEnterButton = false;
@@ -30,7 +31,9 @@ export class PokemonsComponent implements OnInit{
   pokemons: pokemon[] = [];
   allPokemons: resultPokemon[] = [];
   pokemonsPagination: pokemonPagination[] = [];
-  results: resultPokemon[] = [];
+  results: any[] = [];
+  resultsByType: any[] = [];
+  filterTypeCounter = 0;
   slicer: resultPokemon[] = [];
   statusPokemonCard = false;
   stateLoadSpinner = false;
@@ -143,11 +146,33 @@ export class PokemonsComponent implements OnInit{
       Swal.fire({text: errorMsg});
     });
   }
+  //function to select pokemons of the same region
   onSelectedRegion(region: string){
     console.log(region);
   }
+
+  //function to select pokemons of the same type
   onSelectedType(Type: string){
-    console.log(Type);
+    //type filter
+    if(Type != undefined){
+      this.pokedexService.getPokemonByTypes(Type.toLowerCase()).
+      subscribe(data => {
+        this.results = [];
+        this.resultsByType = this.results.concat(data.pokemon);
+        for (let result of this.resultsByType){
+          this.results = this.results.concat(result.pokemon);
+        }
+      });
+      this.filterTypeCounter += 1;
+    }else{
+      if(this.filterTypeCounter > 0){
+        this.results = [];
+        this.limit = 20;
+        this.offset = 0;
+        this.getPokemons(this.limit, this.offset);
+      }
+    }
+
   }
 
 }

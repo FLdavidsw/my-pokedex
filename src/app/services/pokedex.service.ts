@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angu
 import { catchError, map } from 'rxjs/operators';
 import { delay, throwError, Observable } from 'rxjs';
 
-import { pokemon, pokemonPagination } from './../models/pokemon.model';
+import { pokemon, pokemonPagination, typesPokemon } from './../models/pokemon.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +53,9 @@ export class PokedexService {
         return throwError(() => new Error ('Algo esta fallando en el server'));
       })
       )
+  }
+  getPokemonByTypes(type: string){
+    return this.http.get<typesPokemon>(`${this.urlApi}/type/${type}`);
   }
 
   getLocations() {

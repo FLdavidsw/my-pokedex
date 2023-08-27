@@ -16,6 +16,50 @@ export interface pokemon {
     colorType?:               string[];
 }
 
+// pokemons divided by type
+export interface typesPokemon {
+    damage_relations:      DamageRelations;
+    game_indices:          GameIndex[];
+    generation:            Generation;
+    id:                    number;
+    move_damage_class:     Generation;
+    moves:                 Generation[];
+    name:                  string;
+    names:                 Name[];
+    past_damage_relations: any[];
+    pokemon:               resultType[];
+}
+
+export interface DamageRelations {
+    double_damage_from: Generation[];
+    double_damage_to:   Generation[];
+    half_damage_from:   Generation[];
+    half_damage_to:     Generation[];
+    no_damage_from:     Generation[];
+    no_damage_to:       Generation[];
+}
+
+export interface Generation {
+    name: string;
+    url:  string;
+}
+
+export interface GameIndex {
+    game_index: number;
+    generation: Generation;
+}
+
+export interface Name {
+    language: Generation;
+    name:     string;
+}
+
+export interface Pokemon {
+    pokemon: Generation;
+    slot:    number;
+}
+
+//
 export interface region {
     name: string;
     url: string;
@@ -41,6 +85,8 @@ export interface Move {
     move:                  Species;
     version_group_details: VersionGroupDetail[];
 }
+
+// pokemon objects
 
 export interface Sprites {
     back_default:       string;
@@ -81,6 +127,11 @@ export interface Type {
 export interface resultPokemon {
     name: string;
     url: string;
+}
+
+export interface resultType {
+    pokemon: resultPokemon;
+    slot: number;
 }
 
 export interface pokemonPagination {
