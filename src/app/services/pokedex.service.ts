@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angu
 import { catchError, map } from 'rxjs/operators';
 import { delay, throwError, Observable } from 'rxjs';
 
-import { pokemon, pokemonPagination, typesPokemon } from './../models/pokemon.model';
+import { generationData, generations, pokemon, pokemonPagination, typesPokemon } from './../models/pokemon.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,7 @@ export class PokedexService {
   //https://pokeapi.co/api/v2/pokemon?offset=20&limit=20
   // link to get locations: https://pokeapi.co/api/v2/region
   // link to get types: https://pokeapi.co/api/v2/type
+  // link to get generations: https://pokeapi.co/api/v2/generation
   constructor(
     private http: HttpClient
   ){}
@@ -37,6 +38,15 @@ export class PokedexService {
     .pipe(
       map(pokemon => {
         pokemon.img = pokemon.sprites.other['official-artwork'].front_default;
+        /* 
+        pokemon.sprites_default.front_default = pokemon.sprites.front_default;
+        pokemon.sprites_default.back_default = pokemon.sprites.back_default;
+        pokemon.sprites_default.front_shiny = pokemon.sprites.front_shiny;
+        pokemon.sprites_default.back_shiny = pokemon.sprites.back_shiny;
+        pokemon.sprites_default = pokemon.sprites_default.concat(pokemon.sprites.front_shiny);
+        pokemon.sprites_default = pokemon.sprites_default.concat(pokemon.sprites.back_default);
+        pokemon.sprites_default = pokemon.sprites_default.concat(pokemon.sprites.back_shiny);
+        */
         for (var i = 0; i < pokemon.types.length; i++) {
           this.colorType = this.colorAssign(this.colorTypes, pokemon.types[i]);
           this.types = this.types.concat(this.colorType);
@@ -56,6 +66,14 @@ export class PokedexService {
   }
   getPokemonByTypes(type: string){
     return this.http.get<typesPokemon>(`${this.urlApi}/type/${type}`);
+  }
+
+  getPokemonByGenerations(url: string){
+    return this.http.get<generationData>(url);
+  }
+
+  getGenerations() {
+    return this.http.get<generations>(`${this.urlApi}/generation`);
   }
 
   getLocations() {

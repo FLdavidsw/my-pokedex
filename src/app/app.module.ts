@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+//import { SwiperModule } from 'swiper/angular';
+import { register } from 'swiper/element/bundle';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -21,6 +23,8 @@ import { CustomIdPipe } from './pipes/custom-id.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './components/nav/nav.component';
 
+register();
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +40,7 @@ import { NavComponent } from './components/nav/nav.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    //SwiperModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatTabsModule,
@@ -47,6 +52,9 @@ import { NavComponent } from './components/nav/nav.component';
     FormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule { }

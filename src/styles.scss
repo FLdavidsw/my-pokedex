@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import url(./styles/reset.scss);
+@import 'swiper/css/bundle';
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
 
 :root {
     --medium-font: 500;
@@ -94,7 +98,8 @@ button:not(:disabled):active {
 }
 
 button:disabled {
-    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    display: none;
+    //box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

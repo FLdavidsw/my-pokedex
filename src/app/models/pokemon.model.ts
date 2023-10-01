@@ -13,6 +13,7 @@ export interface pokemon {
     types:                    Type[];
     weight:                   number;
     img?:                     string;
+    sprites_default?:         default_sprites;
     colorType?:               string[];
 }
 
@@ -59,6 +60,11 @@ export interface Pokemon {
     slot:    number;
 }
 
+export interface resultType {
+    pokemon: resultPokemon;
+    slot: number;
+}
+
 //
 export interface region {
     name: string;
@@ -86,7 +92,13 @@ export interface Move {
     version_group_details: VersionGroupDetail[];
 }
 
-// pokemon objects
+// POKEMON OBJECTS
+export interface default_sprites {
+    back_default?:       string;
+    back_shiny?:         string;
+    front_default?:      string;
+    front_shiny?:        string;
+}
 
 export interface Sprites {
     back_default:       string;
@@ -129,14 +141,46 @@ export interface resultPokemon {
     url: string;
 }
 
-export interface resultType {
-    pokemon: resultPokemon;
-    slot: number;
-}
-
 export interface pokemonPagination {
     count: number;
     next: string;
     previous: string | undefined | null;
     results: resultPokemon[];
+}
+
+//GENERATIONS
+export interface generations {
+    count:    number;
+    next:     null;
+    previous: null;
+    results:  ResultGeneration[];
+}
+
+export interface ResultGeneration {
+    name: string;
+    url:  string;
+}
+
+// JSON object by every generation
+
+export interface generationData {
+    abilities:       MainRegion[];
+    id:              number;
+    main_region:     MainRegion;
+    moves:           MainRegion[];
+    name:            string;
+    names:           Name[];
+    pokemon_species: resultPokemon[];
+    types:           MainRegion[];
+    version_groups:  MainRegion[];
+}
+
+export interface MainRegion {
+    name: string;
+    url:  string;
+}
+
+export interface Name {
+    language: MainRegion;
+    name:     string;
 }

@@ -1,5 +1,7 @@
 <div *ngIf="pokemon" (click)="showDetail()" class="pokemon-card">
-    <h1>{{ pokemon.name | uppercase }}</h1>
+    <h1 [class.long-text]="pokemon.name.split('').length > 12 && pokemon.name.split('').length < 16" 
+        [class.longer-text]="pokemon.name.split('').length >= 16 && pokemon.name.split('').length <= 20"
+        [class.longest-text]="pokemon.name.split('').length > 20">{{ pokemon.name | uppercase }}</h1>
         <app-img *ngIf="pokemon.img !== undefined" [img]="pokemon.img"></app-img>
     <p class="id">#{{ pokemon.id | customId}}</p>
     <ul class="types">

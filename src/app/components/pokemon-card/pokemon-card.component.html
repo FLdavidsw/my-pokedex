@@ -29,7 +29,7 @@
         <hr/>
         
         <mat-tab-group mat-stretch-tabs class="pokemon-tabs">
-          <mat-tab label="First"> 
+          <mat-tab label="STATS"> 
             <div class="container-stats">
               <div *ngFor="let pokemonChosenStat of pokemonChosen.stats; index as i">
                 <p>{{ pokemonChosenStat.stat.name | uppercase}} {{ pokemonChosenStat.base_stat }}</p>
@@ -37,9 +37,44 @@
             </div>
            </mat-tab>
           
-          <mat-tab label="Second"> Content 2 </mat-tab>
-          
-          <mat-tab label="Third"> Content 3 </mat-tab>
+          <mat-tab label="GAME SPRITES"> 
+            <div class="sprites-container">
+              
+              <div>
+                <p class="sprites-titles">SPRITES DEFAULT:</p>
+                <swiper-container class="sprites-default sprites">
+                  <swiper-slide>
+                    <div>
+                      <img [src]="pokemonChosen.sprites.front_default" alt="img no available">
+                    </div>
+                  </swiper-slide>
+                  <swiper-slide>
+                    <div>
+                      <img [src]="pokemonChosen.sprites.back_default" alt="img no available">
+                    </div>
+                  </swiper-slide>
+                </swiper-container>
+              </div>
+
+              <div>
+                <p class="sprites-titles">SPRITES SHINY:</p>
+                <swiper-container class="sprites-shiny sprites">   
+                  <swiper-slide>
+                     <div>
+                      <img [src]="pokemonChosen.sprites.front_shiny" alt="img no available">
+                    </div>
+                  </swiper-slide>
+                  <swiper-slide>
+                    <div>
+                      <img [src]="pokemonChosen.sprites.back_shiny" alt="img no available">
+                    </div>
+                  </swiper-slide>
+                </swiper-container>
+              </div>
+
+            </div>
+         </mat-tab>
+         
         </mat-tab-group>
       </mat-card-content>
 

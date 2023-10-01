@@ -5,7 +5,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { delay } from 'rxjs/operators';
 
-import { pokemon, region, type, pokemonPagination, resultPokemon, typesPokemon } from './../../models/pokemon.model';
+import { pokemon, region, type, pokemonPagination, resultPokemon, typesPokemon, ResultGeneration, generationData, MainRegion } from './../../models/pokemon.model';
 import { PokedexService } from './../../services/pokedex.service';
 
 @Component({
@@ -20,8 +20,10 @@ export class PokemonsComponent implements OnInit{
                 "ghost": '#95849E', "steel": '#A3B1B2', "dragon": '#77EEB6', "dark": '#8C8593', "fairy": '#EE2F54'}
   colorType!: string;
   types: type[] = [];
+  typeChosen!: string;
   pokemonsByTypes: typesPokemon[] = [];
   regions: region[] = [];
+  generations: ResultGeneration[] = [];
   nameList1 = "Region";
   switchEnterButton = false;
   searchedPokemon = "";
@@ -33,11 +35,13 @@ export class PokemonsComponent implements OnInit{
   pokemonsPagination: pokemonPagination[] = [];
   results: any[] = [];
   resultsByType: any[] = [];
+  resultsByGeneration: resultPokemon[] = [];
   filterTypeCounter = 0;
+  filterGenerationCounter = 0;
   slicer: resultPokemon[] = [];
   statusPokemonCard = false;
   stateLoadSpinner = false;
-  isButtonDisabled: boolean = true;
+  isButtonDisabled: boolean = false;
   add = 20;
   maxNumberLimit = 1280;
   limit = 20;
@@ -52,7 +56,7 @@ export class PokemonsComponent implements OnInit{
   ngOnInit(){
     // this.getPokemonsPagination(this.limit, this.offset)
     this.getPokemons(this.limit, this.offset);
-    this.getRegions();
+    this.getGenerations();
     this.getTypes();
   }
 
@@ -67,7 +71,7 @@ export class PokemonsComponent implements OnInit{
     this.pokedexService.getPokemon(name)
     .subscribe(data => {
       this.pokemonChosen = data;
-      this.pokemonChosen.img = data.sprites.other['official-artwork'].front_default;
+      console.log(this.pokemonChosen.sprites_default);
     });
   }
 
@@ -120,6 +124,14 @@ export class PokemonsComponent implements OnInit{
       });
   }
 
+  getGenerations(){
+    this.pokedexService.getGenerations().
+    subscribe(data => {
+      this.generations = this.generations.concat(data.results);
+      console.log(this.generations);
+    });
+  }
+
   getRegions(){
     this.pokedexService.getLocations().
     subscribe(data => {
@@ -147,32 +159,74 @@ export class PokemonsComponent implements OnInit{
     });
   }
   //function to select pokemons of the same region
-  onSelectedRegion(region: string){
-    console.log(region);
+  onSelectedGeneration(generationUrl: string){
+    this.searchedPokemon = ""; //restarting a null value in the searchedPokemon variable
+    this.pokemonExist = false;
+    if(generationUrl != undefined){
+      this.isButtonDisabled = true;
+      this.pokedexService.getPokemonByGenerations(generationUrl).
+      subscribe(data => {
+        console.log(data.pokemon_species);
+        this.results = [];
+        this.results = this.results.concat(data.pokemon_species);
+      });
+      this.filterGenerationCounter = 1;
+    }else{
+      if(this.filterGenerationCounter > 0){
+        this.isButtonDisabled = false;
+        this.results = [];
+        this.slicer = [];
+        this.limit = 20;
+        this.offset = 0;
+        for(let i = this.offset; i < this.limit; i++){
+          this.slicer = this.slicer.concat(this.allPokemons[i]);
+        }
+        this.results = this.results.concat(this.slicer);
+      }
+      this.filterGenerationCounter = 0;
+    }
+
   }
 
   //function to select pokemons of the same type
   onSelectedType(Type: string){
+    console.log(this.typeChosen);
+    this.searchedPokemon = ""; //restarting a null value in the searchedPokemon variable
     //type filter
+    this.pokemonExist = false;
     if(Type != undefined){
+      this.isButtonDisabled = true;
       this.pokedexService.getPokemonByTypes(Type.toLowerCase()).
       subscribe(data => {
         this.results = [];
         this.resultsByType = this.results.concat(data.pokemon);
+        console.log(this.resultsByType);
         for (let result of this.resultsByType){
           this.results = this.results.concat(result.pokemon);
         }
+        console.log(this.results);
       });
-      this.filterTypeCounter += 1;
+      this.filterTypeCounter = 1;
     }else{
       if(this.filterTypeCounter > 0){
+        this.isButtonDisabled = false;
         this.results = [];
+        this.slicer = [];
         this.limit = 20;
         this.offset = 0;
-        this.getPokemons(this.limit, this.offset);
+        for(let i = this.offset; i < this.limit; i++){
+          this.slicer = this.slicer.concat(this.allPokemons[i]);
+        }
+        this.results = this.results.concat(this.slicer);
       }
+      this.filterTypeCounter = 0;
     }
+  }
 
+  testMethod(selectElement: any){
+    console.log(selectElement);
+    selectElement.reset();
+    console.log(selectElement);
   }
 
 }

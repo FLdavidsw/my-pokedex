@@ -4,13 +4,26 @@
     border: 1px solid;
     border-radius: 20px;
     margin: 15px 10px;
+    box-sizing: border-box;
     h1, p {
         text-align: center;
         margin-top: 10px;
     }
     p {
         margin-bottom: 10px;
+        
     }
+}
+.long-text {
+    font-size: 20px;
+}
+.longer-text {
+    font-size: 15px;
+    padding: 0px 1px;
+}
+.longest-text {
+    font-size: 13px;
+    padding: 0px 0.5px;
 }
 .pokemon-card:hover {
     background-color: black;
@@ -40,6 +53,5 @@ types' styles in the scss file "styles.scss"
 
 @media screen and (max-width: 40em){
     .pokemons-card {
-        margin: 1px 1px;
     }
 }

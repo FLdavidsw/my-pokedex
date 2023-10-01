@@ -41,7 +41,7 @@ export class PokemonComponent implements OnInit {
     this.pokedexService.getPokemon(nameOrId).
     subscribe(data => {
       this.pokemon = data;
-      this.pokemon.img = data.sprites.other['official-artwork'].front_default;
+      //console.log(this.pokemon.name.split('').length)
       //this.stateLoadSpinner = false;
     })
   }

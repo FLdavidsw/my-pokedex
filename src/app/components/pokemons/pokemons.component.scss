@@ -82,7 +82,6 @@ input {
         //grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
     }
     .selects-container {
-        width: 1280px;
         width: 870px;
         margin: 0 auto;
     }
@@ -97,5 +96,6 @@ input {
     }
     .selects-container {
         width: 1260px;
+        padding: 10px 15px 0px 10px;
     }
 }

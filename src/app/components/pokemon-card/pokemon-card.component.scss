@@ -51,6 +51,35 @@
             text-align: center;
         }
     }
+    .sprites-container{
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+    }
+    .sprites-titles{
+        margin: 0 auto;
+        font-size: 16px;
+        font-weight: 20px;
+    }
+    .sprites{
+        div{
+            margin: 0 auto;
+            height: 150px;
+            width: 120px;
+        }
+        img{
+            height: 100%;
+            width: 100%;
+        }
+
+    }
+    /*.sprites-container{
+        display: flex;
+        flex-direction: column;
+        .sprites{
+            height: 50%;
+        }
+    }*/
 
 /*
 styles for "close button" in file styles.scss
