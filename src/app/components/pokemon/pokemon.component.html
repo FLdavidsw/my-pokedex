@@ -1,12 +1,17 @@
-<div *ngIf="pokemon" (click)="showDetail()" class="pokemon-card">
-    <h1 [class.long-text]="pokemon.name.split('').length > 12 && pokemon.name.split('').length < 16" 
-        [class.longer-text]="pokemon.name.split('').length >= 16 && pokemon.name.split('').length <= 20"
-        [class.longest-text]="pokemon.name.split('').length > 20">{{ pokemon.name | uppercase }}</h1>
-        <app-img *ngIf="pokemon.img !== undefined" [img]="pokemon.img"></app-img>
-    <p class="id">#{{ pokemon.id | customId}}</p>
-    <ul class="types">
-        <div *ngFor="let pokemonType of pokemon.types; index as i">
-            <li class="type" *ngIf="pokemon.colorType !== undefined" [ngStyle]="{'background': pokemon.colorType[i]}">{{ pokemonType.type.name | toUpperCaseFirst }}</li>
-        </div>
-    </ul>
-</div>
+
+    <div *ngIf="pokemon" class="pokemon-card">
+        <h1 [class.long-text]="pokemon.name.split('').length > 12 && pokemon.name.split('').length < 16" 
+            [class.longer-text]="pokemon.name.split('').length >= 16 && pokemon.name.split('').length <= 20"
+            [class.longest-text]="pokemon.name.split('').length > 20">{{ pokemon.name | uppercase }}</h1>
+            <a routerLink='.' [queryParams]="{pokemon: pokemon.name}">
+                <app-img (click)="showDetail()" *ngIf="pokemon.img !== undefined" [img]="pokemon.img"></app-img>
+            </a>
+        <p class="id">#{{ pokemon.id | customId}}</p>
+        <ul class="types">
+            <div *ngFor="let pokemonType of pokemon.types; index as i">
+                <li class="type" *ngIf="pokemon.colorType !== undefined" [ngStyle]="{'background': pokemon.colorType[i]}">{{ pokemonType.type.name | toUpperCaseFirst }}</li>
+            </div>
+        </ul>
+    </div>
+
+    

@@ -1,0 +1,13 @@
+
+.pokemon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .img-evolution{
+        border-radius: 125px;
+        overflow: hidden;
+    }
+    .img-evolution:hover {
+        margin: -7px -7px;
+    }
+}

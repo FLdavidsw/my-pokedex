@@ -1,6 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+
+
 //import { SwiperModule } from 'swiper/angular';
 import { register } from 'swiper/element/bundle';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +24,9 @@ import { ToUpperCaseFirstPipe } from './pipes/to-upper-case-first.pipe';
 import { CustomIdPipe } from './pipes/custom-id.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './components/nav/nav.component';
+import { PokemonDetailComponent } from './pages/pokemon-detail/pokemon-detail.component';
+import { HomeComponent } from './pages/home/home.component';
+import { EvolutionComponent } from './components/evolution/evolution.component';
 
 register();
 
@@ -34,7 +39,10 @@ register();
     PokemonCardComponent,
     ToUpperCaseFirstPipe,
     CustomIdPipe,
-    NavComponent
+    NavComponent,
+    PokemonDetailComponent,
+    HomeComponent,
+    EvolutionComponent
   ],
   imports: [
     BrowserModule,

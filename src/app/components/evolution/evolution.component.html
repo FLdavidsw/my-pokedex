@@ -1,0 +1,17 @@
+
+<div *ngIf="pokemon" class="pokemon">
+    <h1>{{ pokemon.name | uppercase }}</h1>
+    <div class="img-evolution">
+        <a [routerLink]="['/pokemon', pokemon.name]">
+            <app-img *ngIf="pokemon.img !== undefined" [img]="pokemon.img"></app-img>
+        </a>
+    </div>
+            
+    <p class="id">#{{ pokemon.id | customId}}</p>
+    <ul class="types">
+        <div *ngFor="let pokemonType of pokemon.types; index as i">
+            <li class="type" *ngIf="pokemon.colorType !== undefined" [ngStyle]="{'background': pokemon.colorType[i]}">{{ pokemonType.type.name | toUpperCaseFirst }}</li>
+        </div>
+    </ul>
+</div>
+

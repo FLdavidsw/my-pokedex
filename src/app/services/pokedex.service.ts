@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { delay, throwError, Observable } from 'rxjs';
 
 import { generationData, generations, pokemon, pokemonPagination, typesPokemon } from './../models/pokemon.model';
@@ -16,6 +16,7 @@ export class PokedexService {
   "ghost": '#95849E', "steel": '#A3B1B2', "dragon": '#77EEB6', "dark": '#8C8593', "fairy": '#EE2F54'}
   colorType!: string;
   types: string[] = [];
+  urlEvolutionChain!: string;
   //https://pokeapi.co/api/v2/pokemon?offset=20&limit=20
   // link to get locations: https://pokeapi.co/api/v2/region
   // link to get types: https://pokeapi.co/api/v2/type
@@ -38,15 +39,6 @@ export class PokedexService {
     .pipe(
       map(pokemon => {
         pokemon.img = pokemon.sprites.other['official-artwork'].front_default;
-        /* 
-        pokemon.sprites_default.front_default = pokemon.sprites.front_default;
-        pokemon.sprites_default.back_default = pokemon.sprites.back_default;
-        pokemon.sprites_default.front_shiny = pokemon.sprites.front_shiny;
-        pokemon.sprites_default.back_shiny = pokemon.sprites.back_shiny;
-        pokemon.sprites_default = pokemon.sprites_default.concat(pokemon.sprites.front_shiny);
-        pokemon.sprites_default = pokemon.sprites_default.concat(pokemon.sprites.back_default);
-        pokemon.sprites_default = pokemon.sprites_default.concat(pokemon.sprites.back_shiny);
-        */
         for (var i = 0; i < pokemon.types.length; i++) {
           this.colorType = this.colorAssign(this.colorTypes, pokemon.types[i]);
           this.types = this.types.concat(this.colorType);
@@ -70,6 +62,17 @@ export class PokedexService {
 
   getPokemonByGenerations(url: string){
     return this.http.get<generationData>(url);
+  }
+
+  getPokemonEvolutions(url: string) {
+    return this.http.get<any>(url).
+    pipe(
+      switchMap((species) => 
+      {
+          this.urlEvolutionChain = species.evolution_chain.url;
+          return this.http.get<any>(this.urlEvolutionChain);
+      })
+    )
   }
 
   getGenerations() {

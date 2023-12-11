@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import Swal from 'sweetalert2';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -15,6 +17,8 @@ import { PokedexService } from './../../services/pokedex.service';
 })
 export class PokemonsComponent implements OnInit{
 
+  pokemonName: string | null = null;
+  
   colorTypes: object = {"normal": '#B6F0EF', "fire": '#FB251B', "water": '#1BA0FB', "grass": '#1ACB35', "flying": '#90D6FA', "fighting": '#F58D25',
                 "poison": '#BE29C1', "electric": '#FFFF00', "ground": '#C55710', "rock": '#903F0A', "psychic": '#EC4895', "ice": '#00FFFB', "bug": '#6F8F2A',
                 "ghost": '#95849E', "steel": '#A3B1B2', "dragon": '#77EEB6', "dark": '#8C8593', "fairy": '#EE2F54'}
@@ -48,22 +52,29 @@ export class PokemonsComponent implements OnInit{
   offset = 0;
 
   constructor(
-    private pokedexService: PokedexService
+    private pokedexService: PokedexService,
+    private route: ActivatedRoute
   ){
     
   }
 
   ngOnInit(){
-    // this.getPokemonsPagination(this.limit, this.offset)
     this.getPokemons(this.limit, this.offset);
     this.getGenerations();
     this.getTypes();
+    this.route.queryParamMap.subscribe(params => {
+      this.pokemonName = params.get('pokemon');
+      console.log(this.pokemonName)
+      if(this.pokemonName){
+        this.showPokemonCard(this.pokemonName);
+      }
+    });
+
   }
 
   loadMorePokemons(){
     this.offset += this.limit;
     this.addingPokemons(this.offset, this.offset + this.limit);
-    // this.getPokemonsPagination(this.limit, this.offset);
   }
 
   showPokemonCard(name: string) {
@@ -71,7 +82,6 @@ export class PokemonsComponent implements OnInit{
     this.pokedexService.getPokemon(name)
     .subscribe(data => {
       this.pokemonChosen = data;
-      console.log(this.pokemonChosen.sprites_default);
     });
   }
 
@@ -114,7 +124,6 @@ export class PokemonsComponent implements OnInit{
         .pipe(delay(1500))
         .subscribe(data => {
           this.pokemon = data;
-          this.pokemon.img = data.sprites.other['official-artwork'].front_default;
           this.pokemons = this.pokemons.concat(this.pokemon);
           this.stateLoadSpinner = false;
         });
@@ -128,7 +137,6 @@ export class PokemonsComponent implements OnInit{
     this.pokedexService.getGenerations().
     subscribe(data => {
       this.generations = this.generations.concat(data.results);
-      console.log(this.generations);
     });
   }
 
@@ -166,7 +174,6 @@ export class PokemonsComponent implements OnInit{
       this.isButtonDisabled = true;
       this.pokedexService.getPokemonByGenerations(generationUrl).
       subscribe(data => {
-        console.log(data.pokemon_species);
         this.results = [];
         this.results = this.results.concat(data.pokemon_species);
       });
@@ -190,7 +197,6 @@ export class PokemonsComponent implements OnInit{
 
   //function to select pokemons of the same type
   onSelectedType(Type: string){
-    console.log(this.typeChosen);
     this.searchedPokemon = ""; //restarting a null value in the searchedPokemon variable
     //type filter
     this.pokemonExist = false;
@@ -200,11 +206,9 @@ export class PokemonsComponent implements OnInit{
       subscribe(data => {
         this.results = [];
         this.resultsByType = this.results.concat(data.pokemon);
-        console.log(this.resultsByType);
         for (let result of this.resultsByType){
           this.results = this.results.concat(result.pokemon);
         }
-        console.log(this.results);
       });
       this.filterTypeCounter = 1;
     }else{
@@ -221,12 +225,6 @@ export class PokemonsComponent implements OnInit{
       }
       this.filterTypeCounter = 0;
     }
-  }
-
-  testMethod(selectElement: any){
-    console.log(selectElement);
-    selectElement.reset();
-    console.log(selectElement);
   }
 
 }
