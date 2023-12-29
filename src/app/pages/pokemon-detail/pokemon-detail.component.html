@@ -1,78 +1,82 @@
 <!--Pokemon detail layout-->
 <div *ngIf="pokemonChosen" class="pokemon-container">
   <div class="pokemon-detail">
-    <!--HEADER-->
-    <div class="pokemon-header">
-      <img class="poke-gif" [src]="this.pokemonGif" alt="pokeGif">
-      <h1>{{ pokemonChosen.name | uppercase }}</h1>
-      <p class="id">
-        #{{ pokemonChosen.id | customId }}
-      </p>
+    <div class="buttons-next-former">
+      <button (click)="goToPrevious()" class="button-other-pokemon">Former Pokemon</button>
+      <button (click)="goToNext()" class="button-other-pokemon">Next Pokemon</button>
     </div>
-    <!--IMAGE-STATS-CONTAINER-->
-    <div class="container-stats-img">
-      <div class="main-img">
-        <app-img *ngIf="pokemonChosen.img !== undefined" [img]="pokemonChosen.img"></app-img>
+    <!--HEADER-->
+    <div class="pokemon-data">
+      <div class="pokemon-header">
+        <img class="poke-gif" [src]="this.pokemonGif" alt="pokeGif">
+        <h1>{{ pokemonChosen.name | uppercase }}</h1>
+        <p class="id">
+          #{{ pokemonChosen.id | customId }}
+        </p>
       </div>
-      <div class="container-stats">
-        <div class="title">
-          <p class="subtitles">POKEMON STATS:</p>
+      <!--IMAGE-STATS-CONTAINER-->
+      <div class="container-stats-img">
+        <div class="main-img">
+          <app-img *ngIf="pokemonChosen.img !== undefined" [img]="pokemonChosen.img"></app-img>
         </div>
-        <div class="stats">
-          <div class="stat" *ngFor="let pokemonChosenStat of pokemonChosen.stats">
-            <li>{{ pokemonChosenStat.stat.name | uppercase}} {{ pokemonChosenStat.base_stat }}
-            </li>
+        <div class="container-stats">
+          <div class="title">
+            <p class="subtitles">POKEMON STATS:</p>
+          </div>
+          <div class="stats">
+            <div class="stat" *ngFor="let pokemonChosenStat of pokemonChosen.stats">
+              <li>{{ pokemonChosenStat.stat.name | uppercase}} {{ pokemonChosenStat.base_stat }}
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--SPRITES-SECTION-->
+      <div class="section-sprites">
+        <div class="subtitles">
+          <p class="sprites-titles">GAME SPRITES:</p>
+        </div>
+        <div class="pokemon-sprites">
+          <div class="container-sprite">
+            <p class="sprites-titles">SPRITES DEFAULT:</p>
+            <swiper-container class="sprites-default sprites">
+              <swiper-slide>
+                <div>
+                  <img [src]="pokemonChosen.sprites.front_default" alt="img no available">
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div>
+                  <img [src]="pokemonChosen.sprites.back_default" alt="img no available">
+                </div>
+              </swiper-slide>
+            </swiper-container>
+          </div>
+          <!--separation-sprite-->
+          <div class="container-sprite">
+            <p class="sprites-titles">SPRITES SHINY:</p>
+            <swiper-container class="sprites-shiny sprites">   
+              <swiper-slide>
+                <div>
+                  <img [src]="pokemonChosen.sprites.front_shiny" alt="img no available">
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div>
+                  <img [src]="pokemonChosen.sprites.back_shiny" alt="img no available">
+                </div>
+              </swiper-slide>
+            </swiper-container>
           </div>
         </div>
       </div>
     </div>
-    <!--SPRITES-SECTION-->
-    <div class="section-sprites">
-      <div class="subtitles">
-        <p class="sprites-titles">GAME SPRITES:</p>
-      </div>
-      <div class="pokemon-sprites">
-        <div class="container-sprite">
-          <p class="sprites-titles">SPRITES DEFAULT:</p>
-          <swiper-container class="sprites-default sprites">
-            <swiper-slide>
-              <div>
-                <img [src]="pokemonChosen.sprites.front_default" alt="img no available">
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <div>
-                <img [src]="pokemonChosen.sprites.back_default" alt="img no available">
-              </div>
-            </swiper-slide>
-          </swiper-container>
-        </div>
-        <!--separation-sprite-->
-        <div class="container-sprite">
-          <p class="sprites-titles">SPRITES SHINY:</p>
-          <swiper-container class="sprites-shiny sprites">   
-            <swiper-slide>
-               <div>
-                <img [src]="pokemonChosen.sprites.front_shiny" alt="img no available">
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <div>
-                <img [src]="pokemonChosen.sprites.back_shiny" alt="img no available">
-              </div>
-            </swiper-slide>
-          </swiper-container>
-        </div>
-      </div>
-    </div>
-
     <!--EVOLUTION-CONTAINER-->
     <div class="evolution-container">   
       <div class="evolution" *ngFor="let pokemon of evolutions">
         <app-evolution *ngIf="pokemon" [pokemonId]="pokemon['name']"></app-evolution>
       </div>
     </div>
-    
+    <button class="general-button" (click)="goToBack()">Return to pokedex</button>
   </div>
-  
 </div>

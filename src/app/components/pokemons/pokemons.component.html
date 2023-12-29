@@ -42,7 +42,7 @@
     </div>
     </ng-template>
         
-    <button class="loadButton load" [disabled]="isButtonDisabled || pokemonExist" *ngIf="!stateLoadSpinner; else loadSpinner"  (click)="loadMorePokemons()">Load More Pokemons</button>
+    <button class="general-button load" [disabled]="isButtonDisabled || pokemonExist" *ngIf="!stateLoadSpinner; else loadSpinner"  (click)="loadMorePokemons()">Load More Pokemons</button>
         <ng-template  #loadSpinner>
             <mat-spinner class="loadSpinner load"></mat-spinner>
         </ng-template>

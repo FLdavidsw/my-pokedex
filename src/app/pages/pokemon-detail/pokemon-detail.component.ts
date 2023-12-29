@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { PokedexService } from '../../services/pokedex.service';
@@ -14,17 +15,22 @@ export class PokemonDetailComponent implements OnInit{
 
   pokemonName: null | string = null;
   pokemonChosen!: pokemon;
+  idNext: number | null = null;
+  nameNext: string | null = null;
+  idPrevious: number | null = null;
+  namePrevious: string | null = null;
   pokemonGif: string | null = null;
   pokemonUrlSpecies: string | null = null;
   evolutions = [];
 
   constructor(
     private route: ActivatedRoute,
-    private pokedexService: PokedexService
+    private pokedexService: PokedexService,
+    private location: Location,
+    private router: Router
   ){}
 
   ngOnInit(): void {
-    
     this.route.paramMap
     .pipe(
       switchMap(params => {
@@ -55,5 +61,27 @@ export class PokemonDetailComponent implements OnInit{
         });
       }
     })
+  }
+  goToPrevious(){
+    this.idPrevious = this.pokemonChosen.id-1;
+    this.pokedexService.getPokemon(this.idPrevious)
+    .subscribe(pokemon =>{
+      this.namePrevious = pokemon.name;
+      this.router.navigate([`/pokemon/${this.namePrevious}`])
+    });
+  }
+  //updating the next pokemon
+  goToNext(){
+    this.idNext = this.pokemonChosen.id+1;
+    this.pokedexService.getPokemon(this.idNext)
+    .subscribe(pokemon =>{
+      this.nameNext = pokemon.name;
+      this.router.navigate([`/pokemon/${this.nameNext}`])
+    });
+  }
+
+  goToBack() {
+    //this.location.back();
+    this.router.navigate(['/home'])
   }
 }

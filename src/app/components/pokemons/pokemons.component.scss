@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background: var(--background);
+    background-size: var(--background-size);
 }
 .selects-container {
     display: flex;
@@ -35,6 +37,7 @@ input {
     grid-gap: 1px;
     margin-left: 3px;
     margin-right: 3px;
+    border-radius: 8px;
 }
 .load {
     width: 300px;
