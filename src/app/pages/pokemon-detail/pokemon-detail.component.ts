@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import Swal from 'sweetalert2';
 
 import { PokedexService } from '../../services/pokedex.service';
 import { pokemon } from '../../models/pokemon.model';
@@ -19,6 +20,9 @@ export class PokemonDetailComponent implements OnInit{
   nameNext: string | null = null;
   idPrevious: number | null = null;
   namePrevious: string | null = null;
+  idNoP: number | null = null;
+  nameNoP: string | null = null;
+  NoPPokemon: boolean = true;
   pokemonGif: string | null = null;
   pokemonUrlSpecies: string | null = null;
   evolutions = [];
@@ -62,25 +66,39 @@ export class PokemonDetailComponent implements OnInit{
       }
     })
   }
-  goToPrevious(){
-    this.idPrevious = this.pokemonChosen.id-1;
-    this.pokedexService.getPokemon(this.idPrevious)
-    .subscribe(pokemon =>{
-      this.namePrevious = pokemon.name;
-      this.router.navigate([`/pokemon/${this.namePrevious}`])
-    });
-  }
   //updating the next pokemon
-  goToNext(){
-    this.idNext = this.pokemonChosen.id+1;
-    this.pokedexService.getPokemon(this.idNext)
-    .subscribe(pokemon =>{
-      this.nameNext = pokemon.name;
-      this.router.navigate([`/pokemon/${this.nameNext}`])
-    });
-  }
+  goToPrevious(): void{ 
+    this.NoPPokemon = false;
+    this.loadOtherPokemon(this.NoPPokemon);
+    }
 
-  goToBack() {
+  //updating the next pokemon
+  goToNext(): void{ 
+    this.NoPPokemon = true;
+    this.loadOtherPokemon(this.NoPPokemon);
+  }
+  //method to get the next or previous pokemon
+  loadOtherPokemon(nextOrPrevious: boolean): void{
+    if(nextOrPrevious === true){
+      this.idNoP = this.pokemonChosen.id+1;
+      this.pokedexService.getPokemon(this.idNoP)
+      .subscribe(pokemon =>{
+        this.nameNoP = pokemon.name;
+        this.router.navigate([`/pokemon/${this.nameNoP}`])
+      });
+    }else{
+      this.idNoP = this.pokemonChosen.id-1;
+      this.pokedexService.getPokemon(this.idNoP)
+      .subscribe(pokemon =>{
+        this.nameNoP = pokemon.name;
+        this.router.navigate([`/pokemon/${this.nameNoP}`])
+      }, errorMsg => {
+        Swal.fire({text: errorMsg});
+      });
+    }
+  }
+  //method 
+  returnPokedex() {
     //this.location.back();
     this.router.navigate(['/home'])
   }

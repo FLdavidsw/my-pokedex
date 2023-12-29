@@ -1,9 +1,9 @@
 <!--Pokemon detail layout-->
 <div *ngIf="pokemonChosen" class="pokemon-container">
   <div class="pokemon-detail">
-    <div class="buttons-next-former">
-      <button (click)="goToPrevious()" class="button-other-pokemon">Former Pokemon</button>
-      <button (click)="goToNext()" class="button-other-pokemon">Next Pokemon</button>
+    <div class="buttons-next-previous">
+      <button (click)="goToPrevious()" class="button-other-pokemon">Previous</button>
+      <button (click)="goToNext()" class="button-other-pokemon">Next</button>
     </div>
     <!--HEADER-->
     <div class="pokemon-data">
@@ -77,6 +77,6 @@
         <app-evolution *ngIf="pokemon" [pokemonId]="pokemon['name']"></app-evolution>
       </div>
     </div>
-    <button class="general-button" (click)="goToBack()">Return to pokedex</button>
+    <button class="general-button" (click)="returnPokedex()">Return to pokedex</button>
   </div>
 </div>

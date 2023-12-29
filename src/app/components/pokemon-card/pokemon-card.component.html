@@ -1,5 +1,5 @@
-<div class="pokemon-card" [class.active]="showCard">
-    <mat-card class="example-card" *ngIf="pokemonChosen">
+<div class="pokemon-card-container" [class.active]="showCard">
+    <mat-card class="pokemon-card" *ngIf="pokemonChosen">
         <mat-card-header class="header-card">
           <div mat-card-avatar class="header-image">
             <!--<app-img *ngIf="urlLogoImg !== undefined" [img]="urlLogoImg" alt="poke"></app-img>-->
@@ -77,19 +77,11 @@
          
         </mat-tab-group>
       </mat-card-content>
-      <a [routerLink]="['/pokemon', pokemonChosen.name]">See datail...</a>
-        <mat-card-actions>
+      <a [routerLink]="['/pokemon', pokemonChosen.name]">
+        <button class="button-detail">See More</button>
+      </a>
+        <mat-card-actions class="button-close-container">
           <button class="button-close general-button" (click)="closePokemonCard()">Close</button>
         </mat-card-actions>
       </mat-card>
 </div>
-<!--
-<div class="pokemon-card" [class.active]="showCard">
-    <div *ngIf="pokemonChosen">
-        <button (click)="closePokemonCard()">Close</button>
-        <h1>{{ pokemonChosen.name }}</h1>
-        <app-img *ngIf="pokemonChosen.img !== undefined" [img]="pokemonChosen.img"></app-img>
-        <p> {{ pokemonChosen.id }}</p>
-    </div>
-</div>
--->
