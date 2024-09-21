@@ -64,7 +64,6 @@ export class PokemonsComponent implements OnInit{
     this.getTypes();
     this.route.queryParamMap.subscribe(params => {
       this.pokemonName = params.get('pokemon');
-      console.log(this.pokemonName)
       if(this.pokemonName){
         this.showPokemonCard(this.pokemonName);
       }
